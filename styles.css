@@ -1,0 +1,203 @@
+* {
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #101010;
+    color: #fff;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+  
+  .container {
+    width: 100vw;
+    height: 100vh;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  h1 {
+    font-size: 2.5em;
+    color: #fff;
+    text-align: center;
+    margin: 0 0 15px 0;
+  }
+  
+  .top-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 0 20px;
+  }
+  
+  .btn-parar-som-topo {
+    background-color: #ff3b3b;
+    color: white;
+    border: none;
+    padding: 14px 24px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 4px 10px rgba(255, 0, 0, 0.3);
+  }
+  
+  .btn-parar-som-topo:hover {
+    background-color: #cc0000;
+  }
+  
+  .mesa-de-corte {
+    flex-grow: 1;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    padding: 10px 20px;
+    overflow-y: auto;
+  }
+  
+  .sound-button {
+    border: none;
+    border-radius: 12px;
+    color: white;
+    position: relative;
+    padding: 10px;
+    cursor: pointer;
+    text-align: center;
+    overflow: hidden;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+  }
+  
+  .sound-button:hover {
+    transform: scale(1.05);
+  }
+  
+  .sound-button .fas.fa-music {
+    font-size: 30px;
+    display: block;
+    margin-top: 15px;
+    color: #fff;
+  }
+  
+  .sound-name {
+    font-size: 15px;
+    margin-top: 10px;
+    word-break: break-word;
+    font-weight: bold;
+  }
+  
+  .favorite {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    color: gold;
+    font-size: 18px;
+  }
+  
+  .download-button,
+  .upload-label,
+  .repeat-button {
+    position: absolute;
+    font-size: 14px;
+    padding: 5px 7px;
+    border: none;
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .download-button:hover,
+  .upload-label:hover,
+  .repeat-button:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+  }
+  
+  .download-button {
+    top: 6px;
+    right: 6px;
+  }
+  
+  .upload-label {
+    bottom: 6px;
+    right: 6px;
+  }
+  
+  .repeat-button {
+    bottom: 6px;
+    left: 6px;
+  }
+  
+  .repeat-button.ativo {
+    background-color: red;
+    color: white;
+  }
+  
+  .upload-input {
+    display: none;
+  }
+  
+  .controls {
+    margin-top: 15px;
+    text-align: center;
+  }
+  
+  #salvarProjeto {
+    padding: 10px 20px;
+    background-color: #28a745;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    cursor: pointer;
+    margin-right: 10px;
+    font-weight: bold;
+    font-size: 16px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s ease;
+  }
+  
+  #salvarProjeto:hover {
+    background-color: #218838;
+  }
+  
+  #carregarProjeto {
+    padding: 10px 14px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    background-color: #f8f9fa;
+    color: #222;
+    font-weight: bold;
+  }
+  
+  /* Cores específicas */
+  .vermelho {
+    background-color: #dc3545;
+  }
+  
+  .vermelho:hover {
+    background-color: #b02a37;
+  }
+  
+  .amarelo {
+    background-color: #ffc107;
+    color: #000;
+  }
+  
+  .amarelo:hover {
+    background-color: #e0a800;
+  }
+  
+  .azul {
+    background-color: #007bff;
+  }
+  
+  .azul:hover {
+    background-color: #0056b3;
+  }
+  

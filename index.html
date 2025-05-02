@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mesa de Corte de Áudios</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+</head>
+<body>
+  <div class="container">
+    <h1>Mesa de Corte</h1>
+
+    <div class="top-controls">
+      <button id="pararSom" class="btn-parar-som-topo">⏹ Parar Som</button>
+    </div>
+
+    <div id="mesaDeCorte" class="mesa-de-corte"></div>
+
+    <div class="controls">
+      <button id="salvarProjeto">Salvar Projeto</button>
+      <input type="file" id="carregarProjeto" accept=".json">
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
