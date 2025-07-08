@@ -1,5 +1,5 @@
 const container = document.getElementById("mesaDeCorte");
-const cores = ["vermelho", "amarelo", "azul"]; // Definindo as cores para os botões
+const status = document.getElementById("statusAudio");
 
 const favoritos = JSON.parse(localStorage.getItem("favoritos")) || {};
 const sonsPadrao = [
@@ -19,9 +19,9 @@ let todosOsSons = [];
 const audiosTocando = [];
 
 function getCorPorIndice(index) {
-  if (index < 11) return "vermelho"; // Botões 1 a 11 são vermelhos
-  if (index >= 11 && index < 22) return "amarelo"; // Botões 12 a 22 são amarelos
-  return "azul"; // Botões 23 a 30 são azuis
+  if (index < 11) return "branco";
+  if (index < 22) return "amarelo";
+  return "azul";
 }
 
 function criarBotaoSom(som, index) {
@@ -29,7 +29,7 @@ function criarBotaoSom(som, index) {
   let repetir = false;
 
   const btn = document.createElement("button");
-  btn.className = "sound-button " + getCorPorIndice(index); // Adiciona a classe da cor
+  btn.className = "sound-button " + getCorPorIndice(index);
 
   const icone = document.createElement("i");
   icone.className = "fas fa-music";
@@ -42,7 +42,6 @@ function criarBotaoSom(som, index) {
   star.className = "fas fa-star favorite";
   if (favoritos[som.nome]) btn.classList.add("favorited");
 
-  // Botão de repetição
   const btnRepeat = document.createElement("button");
   btnRepeat.className = "repeat-button";
   btnRepeat.textContent = "🔁";
@@ -55,21 +54,33 @@ function criarBotaoSom(som, index) {
     btnRepeat.title = repetir ? "Repetindo..." : "Ativar repetição";
   };
 
-  // Evento de clique para tocar áudio
   btn.addEventListener("click", () => {
     audiosTocando.forEach(a => {
       a.pause();
       a.currentTime = 0;
+      if (a._btnRef) a._btnRef.classList.remove("tocando");
     });
 
     audio.currentTime = 0;
     audio.play();
     if (!audiosTocando.includes(audio)) {
       audiosTocando.push(audio);
+      audio._btnRef = btn;
     }
+
+    btn.classList.add("tocando");
+    status.textContent = `🎵 Tocando: ${som.nome}`;
+    status.classList.remove("hidden");
+
+    audio.onended = () => {
+      btn.classList.remove("tocando");
+      audio.loop = false;
+      btnRepeat.classList.remove("ativo");
+      status.textContent = "🎵 Nenhum som tocando";
+      status.classList.add("hidden");
+    };
   });
 
-  // Clique direito: marcar como favorito
   btn.addEventListener("contextmenu", (e) => {
     e.preventDefault();
     if (btn.classList.toggle("favorited")) {
@@ -80,7 +91,6 @@ function criarBotaoSom(som, index) {
     localStorage.setItem("favoritos", JSON.stringify(favoritos));
   });
 
-  // Botão de download
   const btnDownload = document.createElement("button");
   btnDownload.className = "download-button";
   btnDownload.textContent = "⬇";
@@ -97,7 +107,6 @@ function criarBotaoSom(som, index) {
     btnDownload.title = "Som online, não disponível para download";
   }
 
-  // Upload de novo som
   const inputUpload = document.createElement("input");
   inputUpload.type = "file";
   inputUpload.accept = "audio/*";
@@ -130,7 +139,6 @@ function criarBotaoSom(som, index) {
     }
   });
 
-  // Adiciona todos os elementos ao botão
   btn.appendChild(star);
   btn.appendChild(icone);
   btn.appendChild(nome);
@@ -167,17 +175,9 @@ async function salvarProjeto() {
       const response = await fetch(som.url);
       const blob = await response.blob();
       const base64 = await blobToBase64(blob);
-      dados.push({
-        nome: som.nome,
-        base64: base64,
-        favorito: !!favoritos[som.nome]
-      });
+      dados.push({ nome: som.nome, base64, favorito: !!favoritos[som.nome] });
     } else {
-      dados.push({
-        nome: som.nome,
-        url: som.url,
-        favorito: !!favoritos[som.nome]
-      });
+      dados.push({ nome: som.nome, url: som.url, favorito: !!favoritos[som.nome] });
     }
   }
 
@@ -188,7 +188,6 @@ async function salvarProjeto() {
   link.click();
 }
 
-// Eventos
 document.getElementById("salvarProjeto").addEventListener("click", salvarProjeto);
 
 document.getElementById("carregarProjeto").addEventListener("change", async (e) => {
@@ -201,8 +200,8 @@ document.getElementById("carregarProjeto").addEventListener("change", async (e) 
     todosOsSons = [];
 
     for (let item of dados) {
-      let url = item.base64 || item.url;
-      todosOsSons.push({ nome: item.nome, url: url });
+      const url = item.base64 || item.url;
+      todosOsSons.push({ nome: item.nome, url });
       if (item.favorito) favoritos[item.nome] = true;
     }
 
@@ -219,7 +218,11 @@ document.getElementById("pararSom").addEventListener("click", () => {
     audio.pause();
     audio.currentTime = 0;
     audio.loop = false;
+    if (audio._btnRef) audio._btnRef.classList.remove("tocando");
   });
+  status.textContent = "🎵 Nenhum som tocando";
+  status.classList.add("hidden");
 });
 
+document.getElementById("proximoFavorito").addEventListener
 carregarSonsIniciais();
